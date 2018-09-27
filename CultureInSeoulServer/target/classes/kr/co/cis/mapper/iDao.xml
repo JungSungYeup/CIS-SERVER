@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"      
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.cis.dao.iDao">
+<insert id="insertMember">
+Insert into member values (member_seq.nextval,#{param1},#{param2},#{param3})
+</insert>
+<select id="getMemberList" resultType="kr.co.cis.dto.Member">
+select * from member
+</select>
+<select id="login" resultType="Integer">
+select count(*) from member where member_id=#{param1} and member_pw=#{param2}
+</select>
+<select id="loginid" resultType="Integer">
+select count(*) from member where member_id=#{param1}
+</select>
+<select id="getmemberinfo" resultType="kr.co.cis.dto.Member">
+select * from member where member_id=#{param1}
+</select>
+<insert id="insertfavorite">
+Insert into favorite values (favorite_seq.nextval,#{param1},#{param2})
+</insert>
+<select id="getFavoriteList" resultType="kr.co.cis.dto.Favorite">
+select * from favorite where member_id=#{param1}
+</select>
+<delete id="deleteFavorite">
+Delete from favorite where code=(#{param1}) and member_id=(#{param2})
+</delete>
+<delete id="delCode">
+Delete from favorite where member_id=#{param1}
+</delete>
+<insert id="insertFile">
+Insert into memberimage values (memberimage_seq.nextval,#{param1},#{param2},#{param3})
+</insert>
+
+<update id="updateMemberImage">
+update memberimage set ori_name=#{param1}, save_name=#{param2} where member_id=#{param3}
+</update>
+
+<update id="updatenickname">
+update member set member_nickname=#{param2} where id=#{param1}
+</update>
+
+<select id="getmemberimagenum" resultType="Integer">
+select count(*) from memberimage where member_id=#{param1}
+</select>
+
+<select id="getmemberimage" resultType="kr.co.cis.dto.MemberImage">
+select * from memberimage where member_id=#{param1}
+</select>
+
+<insert id="insertBoard">
+Insert into board values (board_seq.nextval,#{param1},#{param2},#{param3},#{param4})
+</insert>
+    
+<select id="getForumBoard" resultType="kr.co.cis.dto.Board">
+select * from board ORDER BY Id DESC
+</select>
+
+<insert id="insertComments">
+Insert into comments values (comments_seq.nextval,#{param1},#{param2},#{param3},#{param4})
+</insert>
+    
+<select id="getComment" resultType="kr.co.cis.dto.Comments">
+select * from comments where board_id=#{param1} ORDER BY Id ASC
+</select>
+	
+<select id="getCommentsNum" resultType="Integer">
+select COUNT(*) from comments where board_id = #{param1}
+</select>
+    
+<update id="updateBoard">
+update board set comments_count=(#{param2}+1) where id=#{param1}
+</update>
+
+<select id="getboard" resultType="Long">
+select MAX(id) from board
+</select>
+
+<insert id="insertboardimage">
+Insert into boardimage values (boardimage_seq.nextval,#{param1},#{param2},#{param3})
+</insert>
+
+<select id="getboardimage" resultType="kr.co.cis.dto.BoardImage">
+select * from boardimage where board_id=#{param1}
+</select>
+
+<select id="getboardimagenum" resultType="Integer">
+select count(*) from boardimage where board_id=#{param1}
+</select>
+
+
+<update id="DeleteupdateBoard">
+update board set comments_count=(#{param2}-1) where id=#{param1}
+</update>
+
+<delete id="deleteComments">
+Delete from Comments where id=#{param1}
+</delete>
+
+
+
+</mapper>
